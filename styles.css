@@ -1,0 +1,1371 @@
+/* ==========================================================================
+   Heaven Pet Club - Design System & Stylesheet
+   Identical aesthetic: Fraunces serif, refined warm tones, premium cards
+   ========================================================================== */
+
+/* ---------- CSS Reset & Base Variables ---------- */
+:root {
+  /* Exact User-Defined Palette:
+     - R245 G246 B240 (#F5F6F0 - Warm Ivory/Off-White)
+     - R234 G244 B243 (#EAF4F3 - Soft Ice Teal/Fresh Mint)
+     - R106 G219 B217 (#6ADBD9 - Signature Bright Teal/Turquoise)
+  */
+  --palette-cream: rgb(245, 246, 240);
+  --palette-ice-teal: rgb(234, 244, 243);
+  --palette-primary-teal: rgb(106, 219, 217);
+
+  /* Backgrounds */
+  --bg-hero: var(--palette-ice-teal);
+  --bg-section-muted: var(--palette-cream);
+  --bg-card-warm: var(--palette-ice-teal);
+  --bg-white: #FFFFFF;
+  
+  /* Primary & Accent Tones */
+  --color-primary: var(--palette-primary-teal);
+  --color-primary-dark: #0D8987;
+  --color-primary-bg: rgba(106, 219, 217, 0.22);
+  
+  /* Deep Slate/Teal for contrast and text */
+  --color-dark: #162B2B;
+  --color-dark-hover: #0D7D7B;
+  --color-text-main: #142222;
+  --color-text-muted: #566868;
+  --color-text-light: #7E9090;
+
+  /* Borders & Shadows */
+  --color-border: #DCE7E6;
+  --color-border-subtle: rgba(106, 219, 217, 0.25);
+  
+  --color-whatsapp: #25D366;
+  --color-whatsapp-hover: #20BA59;
+
+  /* Typography */
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 10px rgba(22, 43, 43, 0.05);
+  --shadow-card: 0 6px 24px rgba(22, 43, 43, 0.07);
+  --shadow-hover: 0 12px 36px rgba(106, 219, 217, 0.22);
+
+  /* Transitions & Easings */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 0.28s var(--ease-smooth);
+  --transition-normal: 0.45s var(--ease-smooth);
+  --transition-slow: 0.85s var(--ease-out-expo);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 30px;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text-main);
+  background-color: var(--bg-white);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  outline: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1160px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* Common Buttons with Ultra Smooth Hover */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--color-dark);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 14px 34px;
+  border-radius: 9999px;
+  letter-spacing: 0.02em;
+  transition: transform 0.4s var(--ease-smooth),
+              background-color 0.35s ease,
+              box-shadow 0.4s var(--ease-smooth),
+              color 0.25s ease;
+  box-shadow: 0 4px 14px rgba(39, 50, 56, 0.16);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-dark-hover);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(106, 219, 217, 0.35), 0 4px 12px rgba(22, 43, 43, 0.12);
+  color: #FFFFFF;
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(39, 50, 56, 0.2);
+}
+
+.btn-icon {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  transition: transform 0.35s var(--ease-smooth);
+}
+
+.btn-primary:hover .btn-icon {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   REVEAL ON SCROLL SYSTEM
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s var(--ease-out-expo),
+              transform 0.85s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.9s var(--ease-out-expo),
+              transform 0.9s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+.reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.9s var(--ease-out-expo),
+              transform 0.9s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+.reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.9s var(--ease-out-expo),
+              transform 0.9s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+.reveal-scale.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger Delays */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal, .reveal-left, .reveal-right, .reveal-scale {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+
+
+/* Common Typography */
+.section-heading {
+  font-family: var(--font-serif);
+  font-size: 2.65rem;
+  font-weight: 700;
+  line-height: 1.18;
+  color: var(--color-dark);
+  letter-spacing: -0.02em;
+}
+
+.section-desc {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.section-header-center {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 56px auto;
+}
+
+.section-sub-desc {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+.center-heading {
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   1. HERO SECTION (100% SCREEN, 50/50 SPLIT)
+   ========================================================================== */
+.hero-section {
+  background-color: var(--palette-ice-teal);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hero-split-container {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+}
+
+.hero-text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 8% 60px 10%;
+  z-index: 2;
+  background-color: var(--palette-ice-teal);
+}
+
+.hero-brand-wrap {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-logo-img {
+  height: 95px;
+  max-width: 220px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-dark);
+  letter-spacing: -0.025em;
+  margin-bottom: 20px;
+}
+
+.hero-subtitle {
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: #555E65;
+  margin-bottom: 32px;
+  max-width: 520px;
+}
+
+.hero-cta-wrap {
+  display: flex;
+}
+
+.btn-whatsapp-hero {
+  background-color: var(--color-dark);
+  border: 1.5px solid var(--palette-primary-teal);
+  padding: 15px 38px;
+  font-size: 0.96rem;
+  letter-spacing: 0.04em;
+}
+
+.btn-whatsapp-hero:hover {
+  background-color: #0E8583;
+  border-color: #0E8583;
+}
+
+.hero-image-col {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.hero-dog-img {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  display: block;
+  transition: transform 0.9s var(--ease-smooth);
+}
+
+.hero-image-col:hover .hero-dog-img {
+  transform: scale(1.025);
+}
+
+
+/* ==========================================================================
+   QUICK LINKS (FUNDO BRANCO, 3 LINKS INTERATIVOS)
+   ========================================================================== */
+.quick-links-section {
+  background-color: #FFFFFF;
+  padding: 64px 24px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.quick-links-container {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.quick-link-card {
+  display: block;
+  text-decoration: none;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(22, 43, 43, 0.09);
+  border-radius: 12px;
+  padding: 26px 32px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(22, 43, 43, 0.02);
+  transition: transform 0.4s var(--ease-smooth),
+              box-shadow 0.4s var(--ease-smooth),
+              border-color 0.35s var(--ease-smooth),
+              background-color 0.35s ease;
+  cursor: pointer;
+}
+
+.quick-link-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--palette-primary-teal);
+  box-shadow: 0 16px 36px rgba(106, 219, 217, 0.22), 0 4px 12px rgba(22, 43, 43, 0.04);
+  background-color: #FFFFFF;
+}
+
+.quick-link-title {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-dark);
+  margin-bottom: 8px;
+  transition: color 0.35s var(--ease-smooth), letter-spacing 0.35s var(--ease-smooth);
+}
+
+.quick-link-card:hover .quick-link-title {
+  color: #0E8583;
+  letter-spacing: 0.14em;
+}
+
+.quick-link-desc {
+  font-size: 0.93rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  margin: 0;
+  transition: color 0.35s ease;
+}
+
+.quick-link-card:hover .quick-link-desc {
+  color: #1F2E2E;
+}
+
+@media (max-width: 768px) {
+  .quick-links-section {
+    padding: 44px 16px;
+  }
+  
+  .quick-link-card {
+    padding: 20px 18px;
+  }
+  
+  .quick-link-title {
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+  }
+  
+  .quick-link-desc {
+    font-size: 0.88rem;
+  }
+}
+
+
+/* ==========================================================================
+   2. UMA EXPERIÊNCIA PENSADA PARA O SEU PET (50/50 FULL-BLEED SPLIT)
+   ========================================================================== */
+.experience-section {
+  background-color: var(--palette-cream);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.experience-split-container {
+  width: 100%;
+  min-height: 580px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+}
+
+.experience-text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 80px 10% 80px 8%;
+  gap: 20px;
+  z-index: 2;
+  background-color: var(--palette-cream);
+}
+
+.experience-cta {
+  margin-top: 12px;
+}
+
+.experience-image-col {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.experience-dog-img {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: transform 0.9s var(--ease-smooth);
+}
+
+.experience-image-col:hover .experience-dog-img {
+  transform: scale(1.025);
+}
+
+
+/* ==========================================================================
+   3. NOSSOS DIFERENCIAIS (CARDS WITH TOP BADGES)
+   ========================================================================== */
+.diferenciais-section {
+  background-color: var(--bg-white);
+  padding-top: 90px;
+  padding-bottom: 110px;
+}
+
+.diferenciais-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 30px;
+  margin-top: 30px;
+}
+
+/* Center the last 2 cards nicely */
+.diferenciais-grid > :nth-child(4) {
+  grid-column: 1 / 2;
+  margin-left: auto;
+}
+
+.diferenciais-grid > :nth-child(5) {
+  grid-column: 2 / 3;
+}
+
+@media (min-width: 993px) {
+  .diferenciais-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .diferenciais-grid > :nth-child(1) { grid-column: 1 / 3; }
+  .diferenciais-grid > :nth-child(2) { grid-column: 3 / 5; }
+  .diferenciais-grid > :nth-child(3) { grid-column: 5 / 7; }
+  .diferenciais-grid > :nth-child(4) { grid-column: 2 / 4; }
+  .diferenciais-grid > :nth-child(5) { grid-column: 4 / 6; }
+}
+
+.diferencial-card {
+  background-color: var(--palette-cream);
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  padding: 38px 28px 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.45s var(--ease-smooth),
+              box-shadow 0.45s var(--ease-smooth),
+              border-color 0.4s var(--ease-smooth),
+              background-color 0.35s ease;
+}
+
+.diferencial-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 42px rgba(106, 219, 217, 0.24), 0 6px 16px rgba(22, 43, 43, 0.04);
+  border-color: var(--palette-primary-teal);
+  background-color: #FFFFFF;
+}
+
+.card-title {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-dark);
+  margin-bottom: 14px;
+}
+
+.card-desc {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+.card-desc strong {
+  color: var(--color-dark);
+  font-weight: 600;
+}
+
+
+/* ==========================================================================
+   4. BANHO COM OZÔNIO
+   ========================================================================== */
+.ozonio-section {
+  background-color: var(--palette-ice-teal);
+  padding-top: 90px;
+  padding-bottom: 90px;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ozonio-container {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  align-items: center;
+  gap: 70px;
+}
+
+.ozonio-image-col {
+  display: flex;
+  justify-content: center;
+}
+
+.woman-puppies-card {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(106, 219, 217, 0.22);
+  transition: transform 0.5s var(--ease-smooth),
+              box-shadow 0.5s var(--ease-smooth);
+}
+
+.woman-puppies-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 54px rgba(106, 219, 217, 0.32);
+}
+
+.woman-puppies-img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s var(--ease-smooth);
+}
+
+.woman-puppies-card:hover .woman-puppies-img {
+  transform: scale(1.04);
+}
+
+.ozonio-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.ozonio-text-col .section-heading {
+  margin-bottom: 20px;
+}
+
+.ozonio-text-col .section-desc {
+  margin-bottom: 14px;
+}
+
+
+
+
+/* ==========================================================================
+   5. MANIFESTO (CUIDADO QUE RESPEITA CADA PET)
+   ========================================================================== */
+.manifesto-section {
+  background-color: var(--bg-white);
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.manifesto-card {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.manifesto-title {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-dark);
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.manifesto-text {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  color: #4A5656;
+  max-width: 680px;
+  margin: 0 auto 16px auto;
+}
+
+
+
+
+/* ==========================================================================
+   6. CLUBE DE VANTAGENS
+   ========================================================================== */
+.clube-section {
+  background-color: var(--palette-ice-teal);
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.clube-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  padding: 60px 48px;
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.45s var(--ease-smooth),
+              box-shadow 0.45s var(--ease-smooth),
+              border-color 0.4s var(--ease-smooth);
+}
+
+.clube-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 48px rgba(106, 219, 217, 0.22);
+  border-color: var(--palette-primary-teal);
+}
+
+.clube-text-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.clube-text-side .section-heading {
+  font-size: 2.3rem;
+}
+
+.clube-cta {
+  margin-top: 16px;
+}
+
+
+/* ==========================================================================
+   7. FINAL CTA
+   ========================================================================== */
+.final-cta-section {
+  background-color: var(--palette-cream);
+  padding-top: 90px;
+  padding-bottom: 100px;
+  text-align: center;
+}
+
+.final-cta-container {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.final-cta-heading {
+  font-family: var(--font-serif);
+  font-size: 2.85rem;
+  font-weight: 700;
+  color: var(--color-dark);
+  letter-spacing: -0.02em;
+  margin-top: 6px;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.final-cta-prompt {
+  font-size: 1.2rem;
+  color: var(--color-dark);
+  margin-bottom: 36px;
+}
+
+.btn-cta-large {
+  padding: 16px 44px;
+  font-size: 1.05rem;
+  letter-spacing: 0.03em;
+}
+
+
+/* ==========================================================================
+   8. FOOTER / SIMPLIFICADO
+   ========================================================================== */
+.site-footer {
+  background-color: #122121;
+  color: #FFFFFF;
+  padding-top: 44px;
+  padding-bottom: 44px;
+  border-top: 1px solid rgba(106, 219, 217, 0.15);
+}
+
+.footer-simple-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.footer-simple-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-logo-img {
+  height: 80px;
+  max-width: 200px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: brightness(1.15) drop-shadow(0 4px 16px rgba(106, 219, 217, 0.35));
+}
+
+.footer-brand-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+.footer-copyright {
+  font-size: 0.86rem;
+  color: #8BA0A0;
+  margin: 0;
+}
+
+
+/* ==========================================================================
+   FLOATING WHATSAPP
+   ========================================================================== */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background-color: var(--color-whatsapp);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+  z-index: 999;
+  transition: transform 0.4s var(--ease-bounce),
+              background-color 0.3s ease,
+              box-shadow 0.4s var(--ease-smooth);
+}
+
+.floating-whatsapp:hover {
+  background-color: var(--color-whatsapp-hover);
+  transform: translateY(-4px) scale(1.1);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-float-icon {
+  width: 32px;
+  height: 32px;
+}
+
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (TABLETS, PHONES & SMALL SCREENS)
+   ========================================================================== */
+
+/* 1. Large Tablets & Small Desktops (<= 1024px) */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 2.75rem;
+  }
+
+  .hero-text-col {
+    padding: 50px 6%;
+  }
+
+  .experience-text-col {
+    padding: 60px 6%;
+  }
+
+  .ozonio-container {
+    gap: 40px;
+  }
+}
+
+/* 2. Tablets & iPad Portrait (<= 900px) */
+@media (max-width: 900px) {
+  /* Hero section */
+  .hero-section {
+    min-height: auto;
+    height: auto;
+  }
+
+  .hero-split-container {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    height: auto;
+  }
+
+  .hero-text-col {
+    order: 1;
+    padding: 56px 24px 40px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .hero-brand-wrap {
+    justify-content: center;
+  }
+
+  .hero-logo-img {
+    height: 85px;
+    max-width: 190px;
+  }
+
+  .hero-title {
+    font-size: 2.35rem;
+    margin-bottom: 16px;
+  }
+
+  .hero-subtitle {
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-image-col {
+    order: 2;
+    height: 440px;
+    min-height: 320px;
+    max-height: 50vh;
+    width: 100%;
+  }
+
+  .hero-dog-img {
+    object-position: center 20%;
+  }
+
+  /* Quick links */
+  .quick-links-section {
+    padding: 48px 20px;
+  }
+
+  /* Section 2: Experience */
+  .experience-section {
+    min-height: auto;
+  }
+
+  .experience-split-container {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .experience-text-col {
+    order: 1;
+    padding: 54px 24px 44px;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .experience-text-col .section-heading {
+    text-align: center;
+  }
+
+  .experience-text-col .section-desc {
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .experience-cta {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .experience-image-col {
+    order: 2;
+    height: 400px;
+    min-height: 280px;
+    max-height: 48vh;
+    width: 100%;
+  }
+
+  /* Section 3: Diferenciais (2 cols on tablet) */
+  .diferenciais-section {
+    padding-top: 70px;
+    padding-bottom: 80px;
+  }
+
+  .diferenciais-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .diferenciais-grid > :nth-child(1) { grid-column: auto; }
+  .diferenciais-grid > :nth-child(2) { grid-column: auto; }
+  .diferenciais-grid > :nth-child(3) { grid-column: auto; }
+  .diferenciais-grid > :nth-child(4) { grid-column: auto; margin-left: 0; }
+  .diferenciais-grid > :nth-child(5) {
+    grid-column: 1 / -1;
+    max-width: 440px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Section 4: Banho com Ozônio */
+  .ozonio-section {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .ozonio-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .ozonio-image-col {
+    justify-content: center;
+  }
+
+  .woman-puppies-card {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .ozonio-text-col {
+    align-items: center;
+    text-align: center;
+  }
+
+  .ozonio-text-col .section-desc {
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Section 5: Manifesto */
+  .manifesto-section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .manifesto-title {
+    font-size: 2.1rem;
+  }
+
+  /* Section 6: Clube */
+  .clube-section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+
+  .clube-card {
+    padding: 44px 32px;
+  }
+
+  .clube-text-side .section-heading {
+    font-size: 2rem;
+  }
+
+  /* Section 7: Final CTA */
+  .final-cta-section {
+    padding-top: 72px;
+    padding-bottom: 84px;
+  }
+
+  .final-cta-heading {
+    font-size: 2.35rem;
+  }
+}
+
+/* 3. Mobile Phones (<= 640px) */
+@media (max-width: 640px) {
+  /* Container margins */
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Hero */
+  .hero-text-col {
+    padding: 44px 16px 32px;
+  }
+
+  .hero-logo-img {
+    height: 72px;
+    max-width: 165px;
+  }
+
+  .hero-title {
+    font-size: 1.95rem;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .hero-image-col {
+    height: 320px;
+    min-height: 240px;
+    max-height: 42vh;
+  }
+
+  /* Quick links */
+  .quick-links-section {
+    padding: 36px 14px;
+  }
+
+  .quick-links-container {
+    gap: 12px;
+  }
+
+  .quick-link-card {
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+
+  .quick-link-title {
+    font-size: 0.94rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .quick-link-desc {
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  /* Experience section */
+  .experience-text-col {
+    padding: 44px 16px 36px;
+    gap: 16px;
+  }
+
+  .experience-text-col .section-heading {
+    font-size: 1.85rem;
+  }
+
+  .experience-text-col .section-desc {
+    font-size: 0.93rem;
+    line-height: 1.65;
+  }
+
+  .experience-image-col {
+    height: 300px;
+    min-height: 220px;
+    max-height: 40vh;
+  }
+
+  .btn-primary {
+    width: 100%;
+    max-width: 320px;
+    padding: 14px 24px;
+    font-size: 0.92rem;
+  }
+
+  /* Diferenciais section (1 col) */
+  .diferenciais-section {
+    padding-top: 56px;
+    padding-bottom: 64px;
+  }
+
+  .section-header-center {
+    margin-bottom: 32px;
+  }
+
+  .section-heading {
+    font-size: 1.85rem;
+  }
+
+  .section-sub-desc {
+    font-size: 0.92rem;
+  }
+
+  .diferenciais-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-top: 20px;
+  }
+
+  .diferencial-card {
+    max-width: 100%;
+    padding: 28px 20px 24px;
+    border-radius: 16px;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .card-desc {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  /* Banho com Ozônio */
+  .ozonio-section {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .ozonio-container {
+    gap: 28px;
+  }
+
+  .woman-puppies-card {
+    max-width: 320px;
+    border-radius: 18px;
+  }
+
+  .ozonio-text-col .section-desc {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  /* Manifesto */
+  .manifesto-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .manifesto-title {
+    font-size: 1.8rem;
+    line-height: 1.25;
+    margin-bottom: 16px;
+  }
+
+  .manifesto-text {
+    font-size: 0.96rem;
+    line-height: 1.65;
+  }
+
+  /* Clube */
+  .clube-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  .clube-card {
+    padding: 34px 18px;
+    border-radius: 18px;
+  }
+
+  .clube-text-side .section-heading {
+    font-size: 1.7rem;
+    line-height: 1.25;
+  }
+
+  .clube-text-side .section-desc {
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  /* Final CTA */
+  .final-cta-section {
+    padding-top: 56px;
+    padding-bottom: 64px;
+  }
+
+  .final-cta-heading {
+    font-size: 1.95rem;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .final-cta-prompt {
+    font-size: 1.05rem;
+    margin-bottom: 24px;
+  }
+
+  .btn-cta-large {
+    width: 100%;
+    max-width: 320px;
+    padding: 15px 20px;
+    font-size: 0.92rem;
+  }
+
+  /* Footer */
+  .site-footer {
+    padding-top: 36px;
+    padding-bottom: 36px;
+  }
+
+  .footer-logo-img {
+    height: 65px;
+    max-width: 160px;
+  }
+
+  .footer-copyright {
+    font-size: 0.8rem;
+  }
+
+  /* Floating WhatsApp */
+  .floating-whatsapp {
+    bottom: 18px;
+    right: 18px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .whatsapp-float-icon {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* 4. Small Mobile Phones (<= 380px) */
+@media (max-width: 380px) {
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .section-heading,
+  .manifesto-title,
+  .final-cta-heading {
+    font-size: 1.6rem;
+  }
+
+  .quick-link-card {
+    padding: 16px 12px;
+  }
+
+  .diferencial-card {
+    padding: 24px 16px 20px;
+  }
+
+  .clube-card {
+    padding: 28px 14px;
+  }
+}
