@@ -406,14 +406,16 @@ button {
 }
 
 .quick-link-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   text-decoration: none;
   background-color: #FFFFFF;
   border: 1px solid rgba(22, 43, 43, 0.09);
-  border-radius: 12px;
-  padding: 26px 32px;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(22, 43, 43, 0.02);
+  border-radius: 14px;
+  padding: 24px 28px;
+  box-shadow: 0 2px 8px rgba(22, 43, 43, 0.03);
   transition: transform 0.4s var(--ease-smooth),
               box-shadow 0.4s var(--ease-smooth),
               border-color 0.35s var(--ease-smooth),
@@ -428,20 +430,60 @@ button {
   background-color: #FFFFFF;
 }
 
-.quick-link-title {
+.quick-link-tag {
+  display: inline-block;
   font-family: var(--font-sans);
-  font-size: 1.05rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-dark);
-  margin-bottom: 8px;
-  transition: color 0.35s var(--ease-smooth), letter-spacing 0.35s var(--ease-smooth);
+  color: #0D8987;
+  background-color: rgba(106, 219, 217, 0.16);
+  padding: 4px 14px;
+  border-radius: 9999px;
+  margin-bottom: 12px;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-.quick-link-card:hover .quick-link-title {
+.quick-link-card:hover .quick-link-tag {
+  background-color: rgba(106, 219, 217, 0.28);
+  color: #076462;
+}
+
+.quick-link-main-info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1A5452;
+  margin: 0 0 8px 0;
+  line-height: 1.35;
+  transition: color 0.35s ease, transform 0.35s var(--ease-smooth);
+}
+
+.quick-link-card:hover .quick-link-main-info {
   color: #0E8583;
-  letter-spacing: 0.14em;
+}
+
+.quick-link-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  stroke: #1A5452;
+  transition: stroke 0.35s ease, transform 0.35s var(--ease-smooth);
+}
+
+.quick-link-card:hover .quick-link-icon {
+  stroke: #0E8583;
+  transform: scale(1.12);
+}
+
+.quick-link-value {
+  letter-spacing: -0.01em;
+  word-break: break-word;
 }
 
 .quick-link-desc {
@@ -449,6 +491,7 @@ button {
   color: var(--color-text-muted);
   line-height: 1.55;
   margin: 0;
+  max-width: 600px;
   transition: color 0.35s ease;
 }
 
@@ -462,12 +505,25 @@ button {
   }
   
   .quick-link-card {
-    padding: 20px 18px;
+    padding: 20px 16px;
   }
   
-  .quick-link-title {
-    font-size: 0.95rem;
+  .quick-link-tag {
+    font-size: 0.72rem;
     letter-spacing: 0.08em;
+    padding: 3px 12px;
+    margin-bottom: 10px;
+  }
+
+  .quick-link-main-info {
+    font-size: 1.05rem;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .quick-link-icon {
+    width: 20px;
+    height: 20px;
   }
   
   .quick-link-desc {
@@ -841,6 +897,39 @@ button {
   object-fit: contain;
   display: block;
   filter: brightness(1.15) drop-shadow(0 4px 16px rgba(106, 219, 217, 0.35));
+}
+
+.footer-contact-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px 28px;
+  margin: 12px 0 6px;
+  max-width: 860px;
+}
+
+.footer-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--palette-primary-teal);
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.footer-contact-item:hover {
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.footer-contact-icon {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  flex-shrink: 0;
 }
 
 .footer-brand-name {
@@ -1359,6 +1448,15 @@ button {
 
   .quick-link-card {
     padding: 16px 12px;
+  }
+
+  .quick-link-main-info {
+    font-size: 0.95rem;
+  }
+
+  .footer-contact-info {
+    flex-direction: column;
+    gap: 10px;
   }
 
   .diferencial-card {
